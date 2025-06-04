@@ -1,0 +1,5 @@
+package com.v2soft.vpmt.Repository;
+
+public interface ProjectRepository extends JpaRepository<Project, Long> {
+    List<Project> findByUserId(Long userId);
+}
