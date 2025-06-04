@@ -1,0 +1,70 @@
+package com.v2soft.vpmt;
+
+import com.v2soft.vpmt.model.Permission;
+import com.v2soft.vpmt.model.Role;
+import com.v2soft.vpmt.model.UserEntity;
+import com.v2soft.vpmt.repository.UserRepository;
+import com.v2soft.vpmt.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.Optional;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class UserServiceTest {
+
+    @Mock
+    private UserRepository userRepository;
+
+    @InjectMocks
+    private UserService userService;
+
+    private UserEntity user;
+
+    @BeforeEach
+    void setUp() {
+        Permission permission = new Permission();
+        permission.setName("REPORT");
+
+        Role role = new Role();
+        role.setName("a");
+        role.setPermissions(Set.of(permission));
+
+        user = new UserEntity();
+        user.setId(1L);
+        user.setUsername("testuser");
+        user.setPassword("encodedpassword");
+        user.setRoles(Set.of(role));
+    }
+
+    @Test
+    void loadUserByUsername_returnsUserDetails() {
+        when(userRepository.findByUsername("testuser")).thenReturn(Optional.of(user));
+
+        UserDetails result = userService.loadUserByUsername("testuser");
+
+        assertThat(result.getUsername()).isEqualTo("testuser");
+        assertThat(result.getPassword()).isEqualTo("encodedpassword");
+        assertThat(result.getAuthorities()).extracting("authority").containsExactly("REPORT");
+    }
+
+    @Test
+    void loadUserByUsername_userNotFound_throwsException() {
+        when(userRepository.findByUsername("unknown")).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> userService.loadUserByUsername("unknown"))
+                .isInstanceOf(UsernameNotFoundException.class);
+    }
+}
+
