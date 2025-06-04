@@ -1,0 +1,27 @@
+package com.v2soft.vpmt.service;
+
+
+import com.v2soft.vpmt.model.UserEntity;
+import com.v2soft.vpmt.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
+
+@Service
+public class UserService implements UserDetailsService {
+    @Autowired private UserRepository userRepo;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity user = userRepo.findByUsername(username).orElseThrow();
+        var authorities = user.getRoles().stream()
+                .flatMap(role -> role.getPermissions().stream())
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
+                .collect(Collectors.toList());
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(), user.getPassword(), authorities);
+    }
+}
+
