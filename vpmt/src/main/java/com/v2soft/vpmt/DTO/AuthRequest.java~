@@ -1,0 +1,4 @@
+package com.v2soft.vpmt.DTO;
+
+public class AuthRequest {
+}

@@ -1,0 +1,37 @@
+package com.v2soft.vpmt.controller;
+
+import com.v2soft.vpmt.DTO.AuthRequest;
+import com.v2soft.vpmt.DTO.AuthResponse;
+import com.v2soft.vpmt.Entity.User;
+import com.v2soft.vpmt.JwtUtil;
+import com.v2soft.vpmt.Repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+    @Autowired
+    private UserRepository userRepo;
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AuthRequest authReq) {
+        Optional<User> userOpt = userRepo.findByUsername(authReq.getUsername());
+        if (userOpt.isPresent() && userOpt.get().getPassword().equals(authReq.getPassword())) {
+            String token = jwtUtil.generateToken(authReq.getUsername());
+            return ResponseEntity.ok(new AuthResponse(token));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+    }
+}
+
