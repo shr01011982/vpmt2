@@ -1,0 +1,15 @@
+package com.stellants.permissionmgmt.service;
+
+import com.stellants.permissionmgmt.dto.PermissionRequest;
+import com.stellants.permissionmgmt.dto.PermissionResponse;
+
+import java.util.List;
+
+public interface PermissionService {
+    PermissionResponse save(PermissionRequest request);
+    List<PermissionResponse> getAll();
+    void deleteById(Long id);
+    PermissionResponse getById(Long id);
+
+}
+

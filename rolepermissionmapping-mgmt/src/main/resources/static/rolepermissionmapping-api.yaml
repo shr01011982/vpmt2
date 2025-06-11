@@ -1,0 +1,128 @@
+openapi: 3.0.1
+info:
+  title: Role Permission Mapping API
+  version: 1.0.0
+  description: API to manage role-permission mappings
+
+servers:
+  - url: http://localhost:8082
+
+paths:
+  /api/role-permissions:
+    post:
+      summary: Add new role-permission mapping
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RolePermissionRequest'
+            example:
+              roleName: ADMIN
+              permissions: [CREATE, READ, UPDATE]
+      responses:
+        '201':
+          description: Mapping created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionResponse'
+              example:
+                id: 1
+                roleName: ADMIN
+                permissions: [CREATE, READ, UPDATE]
+
+    get:
+      summary: List all role-permission mappings
+      responses:
+        '200':
+          description: List of mappings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RolePermissionResponse'
+              example:
+                - id: 1
+                  roleName: ADMIN
+                  permissions: [CREATE, READ, UPDATE]
+                - id: 2
+                  roleName: MANAGER
+                  permissions: [READ, DELETE]
+
+  /api/role-permissions/{id}:
+    get:
+      summary: Get role-permission mapping by ID
+      operationId: getRolePermissionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Mapping found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionResponse'
+              example:
+                id: 1
+                roleName: ADMIN
+                permissions: [CREATE, READ, UPDATE]
+        '404':
+          description: Mapping not found
+
+    delete:
+      summary: Delete role-permission mapping by ID
+      operationId: deleteRolePermissionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '204':
+          description: Deleted successfully
+        '404':
+          description: Mapping not found
+
+components:
+  schemas:
+    RolePermissionRequest:
+      type: object
+      required:
+        - roleName
+        - permissions
+      properties:
+        roleName:
+          type: string
+          maxLength: 15
+          example: ADMIN
+        permissions:
+          type: array
+          items:
+            type: string
+            enum: [CREATE, READ, UPDATE, DELETE]
+          example: [CREATE, UPDATE]
+
+    RolePermissionResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        roleName:
+          type: string
+          example: ADMIN
+        permissions:
+          type: array
+          items:
+            type: string
+            enum: [CREATE, READ, UPDATE, DELETE]
+          example: [CREATE, READ, UPDATE]

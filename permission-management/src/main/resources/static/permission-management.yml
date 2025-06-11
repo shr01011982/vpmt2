@@ -1,0 +1,129 @@
+openapi: 3.0.1
+info:
+  title: Permission Management API
+  version: 1.0.0
+  description: API to manage permissions (create, retrieve, delete, and fetch by ID).
+
+servers:
+  - url: http://localhost:8081
+
+paths:
+  /api/permissions:
+    post:
+      summary: Create a new permission
+      operationId: createPermission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PermissionRequest'
+            example:
+              name: VIEW_REPORTS
+              description: Grants access to view reports
+      responses:
+        '201':
+          description: Permission created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionResponse'
+              example:
+                id: 1
+                name: VIEW_REPORTS
+                description: Grants access to view reports
+        '400':
+          description: Invalid input
+
+    get:
+      summary: Retrieve all permissions
+      operationId: getAllPermissions
+      responses:
+        '200':
+          description: List of all permissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PermissionResponse'
+              example:
+                - id: 1
+                  name: VIEW_REPORTS
+                  description: Grants access to view reports
+                - id: 2
+                  name: EDIT_USERS
+                  description: Allows editing user information
+
+  /api/permissions/{id}:
+    get:
+      summary: Get permission by ID
+      operationId: getPermissionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the permission
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Permission found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionResponse'
+              example:
+                id: 1
+                name: VIEW_REPORTS
+                description: Grants access to view reports
+        '404':
+          description: Permission not found
+
+    delete:
+      summary: Delete permission by ID
+      operationId: deletePermissionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the permission to delete
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '204':
+          description: Permission deleted successfully
+        '404':
+          description: Permission not found
+
+components:
+  schemas:
+    PermissionRequest:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+          maxLength: 15
+          example: VIEW_REPORTS
+        description:
+          type: string
+          maxLength: 255
+          example: Grants access to view reports
+
+    PermissionResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: VIEW_REPORTS
+        description:
+          type: string
+          example: Grants access to view reports

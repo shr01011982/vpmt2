@@ -1,0 +1,28 @@
+package com.stellants.rolepermission.service.external;
+
+import com.stellants.rolepermission.dto.PermissionDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
+
+@Service
+public class PermissionServiceClient {
+
+    private static final String PERMISSION_SERVICE_BASE_URL = "http://localhost:8081";
+
+    @Autowired
+    private WebClient.Builder webClientBuilder;
+
+    public List<PermissionDto> getAllPermissions() {
+        return webClientBuilder.build()
+                .get()
+                .uri(PERMISSION_SERVICE_BASE_URL + "/api/permissions")
+                .retrieve()
+                .bodyToFlux(PermissionDto.class)
+                .collectList()
+                .block(); // Blocking for simplicity; prefer reactive in async flow
+    }
+}
