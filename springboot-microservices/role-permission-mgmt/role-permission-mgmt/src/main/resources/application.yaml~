@@ -1,0 +1,39 @@
+#server.port=8082
+#spring.jackson.date-format=org.openapitools.RFC3339DateFormat
+#spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS=false
+server:
+  port: 8082
+
+spring:
+  application:
+    name: role-permission-mapping-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/role_permission_db?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html

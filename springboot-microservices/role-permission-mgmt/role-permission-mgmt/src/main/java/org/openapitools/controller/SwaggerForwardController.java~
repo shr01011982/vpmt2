@@ -1,0 +1,4 @@
+package org.openapitools.controller;
+
+public class SwaggerForwardController {
+}

@@ -1,0 +1,10 @@
+package org.openapitools.service;
+
+import com.example.auth.dto.UserRequest;
+import com.example.auth.dto.UserResponse;
+
+public interface UserService {
+    UserResponse register(UserRequest request);
+    String authenticate(String username, String password);
+    UserResponse getByUsername(String username);
+}
