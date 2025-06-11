@@ -1,0 +1,40 @@
+Post: http://localhost:8083/auth/register
+
+{
+  "username": "alice",
+  "password": "alice123",
+  "email": "alice@example.com",
+  "role": "ADMIN"
+}
+
+Post: http://localhost:8083/auth/login
+
+{
+  "username": "alice",
+  "password": "alice123"
+}
+
+GET /users
+Header:
+Authorization: Bearer <your_token>
+
+GET /users/1
+Header:
+Authorization: Bearer <your_token>
+
+
+PUT /users/1
+Header:
+Authorization: Bearer <your_token>
+Body:
+{
+  "username": "alice-updated",
+  "password": "newpass123",
+  "email": "alice.updated@example.com",
+  "role": "MANAGER"
+}
+DELETE /users/1
+Header:
+Authorization: Bearer <your_token>
+
+

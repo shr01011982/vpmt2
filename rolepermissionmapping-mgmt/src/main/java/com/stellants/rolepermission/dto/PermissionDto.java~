@@ -1,0 +1,4 @@
+package com.stellants.rolepermission.dto;
+
+public class PermissionDto {
+}

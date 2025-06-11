@@ -1,0 +1,13 @@
+package com.stellants.rolepermission.service;
+
+import com.stellants.rolepermission.dto.RolePermissionRequest;
+import com.stellants.rolepermission.dto.RolePermissionResponse;
+
+import java.util.List;
+
+public interface RolePermissionMappingService {
+    RolePermissionResponse save(RolePermissionRequest request);
+    List<RolePermissionResponse> getAll();
+    void deleteById(Long id);
+    RolePermissionResponse getById(Long id);
+}

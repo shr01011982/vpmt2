@@ -1,0 +1,55 @@
+package com.stellants.rolepermission.service.impl;
+
+import com.stellants.rolepermission.dto.RolePermissionRequest;
+import com.stellants.rolepermission.dto.RolePermissionResponse;
+import com.stellants.rolepermission.entity.RolePermissionMapping;
+import com.stellants.rolepermission.exception.ResourceNotFoundException;
+import com.stellants.rolepermission.repository.RolePermissionMappingRepository;
+import com.stellants.rolepermission.service.RolePermissionMappingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class RolePermissionMappingServiceImpl implements RolePermissionMappingService {
+
+    @Autowired
+    private RolePermissionMappingRepository repository;
+
+    @Override
+    public RolePermissionResponse save(RolePermissionRequest request) {
+        RolePermissionMapping mapping = new RolePermissionMapping();
+        mapping.setRoleName(request.getRoleName());
+        mapping.setPermissions(request.getPermissions());
+        return toResponse(repository.save(mapping));
+    }
+
+    @Override
+    public List<RolePermissionResponse> getAll() {
+        return repository.findAll().stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Mapping not found"));
+        repository.deleteById(id);
+    }
+
+    private RolePermissionResponse toResponse(RolePermissionMapping mapping) {
+        RolePermissionResponse res = new RolePermissionResponse();
+        res.setId(mapping.getId());
+        res.setRoleName(mapping.getRoleName());
+        res.setPermissions(mapping.getPermissions());
+        return res;
+    }
+    @Override
+    public RolePermissionResponse getById(Long id) {
+        RolePermissionMapping mapping = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Mapping not found with ID: " + id));
+        return toResponse(mapping);
+    }
+}
