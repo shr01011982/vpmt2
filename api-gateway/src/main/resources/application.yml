@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+
+        # Permission Service
+        - id: permission-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/permission/**
+        - id: permission-api-docs
+          uri: http://localhost:8081
+          predicates:
+            - Path=/permission/v3/api-docs
+          filters:
+            - RewritePath=/permission/v3/api-docs, /v3/api-docs
+
+        # Role-Permission Service
+        - id: role-permission-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/role-permission/**
+        - id: role-permission-api-docs
+          uri: http://localhost:8082
+          predicates:
+            - Path=/role-permission/v3/api-docs
+          filters:
+            - RewritePath=/role-permission/v3/api-docs, /v3/api-docs
+
+        # User Auth Service
+        - id: user-auth-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/user-auth/**
+        - id: user-auth-api-docs
+          uri: http://localhost:8083
+          predicates:
+            - Path=/user-auth/v3/api-docs
+          filters:
+            - RewritePath=/user-auth/v3/api-docs, /v3/api-docs
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Permission Management Service
+        url: /permission/v3/api-docs
+      - name: Role-Permission Mapping Service
+        url: /role-permission/v3/api-docs
+      - name: User Auth Service
+        url: /user-auth/v3/api-docs

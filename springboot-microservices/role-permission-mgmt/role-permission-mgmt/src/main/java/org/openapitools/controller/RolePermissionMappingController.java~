@@ -1,0 +1,37 @@
+package org.openapitools.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/role-permissions")
+public class RolePermissionMappingController {
+
+    @Autowired
+    private RolePermissionMappingService service;
+
+    @PostMapping
+    public ResponseEntity<RolePermissionResponse> create(@Valid @RequestBody RolePermissionRequest request) {
+        return new ResponseEntity<>(service.save(request), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RolePermissionResponse>> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RolePermissionResponse> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+}
+

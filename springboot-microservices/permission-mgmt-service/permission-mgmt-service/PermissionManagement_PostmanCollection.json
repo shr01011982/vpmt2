@@ -1,0 +1,97 @@
+{
+  "info": {
+    "name": "Permission Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "f3d25a7e-b15e-4a82-9d29-123456789000",
+    "description": "Postman collection for testing Permission Management endpoints"
+  },
+  "item": [
+    {
+      "name": "Create Permission",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"CREATE_USER\",\n  \"description\": \"Allows creation of user records\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/permissions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "permissions"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All Permissions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/permissions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "permissions"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Permission By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/permissions/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "permissions",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Permission By ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/permissions/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "api",
+            "permissions",
+            "1"
+          ]
+        }
+      }
+    }
+  ]
+}

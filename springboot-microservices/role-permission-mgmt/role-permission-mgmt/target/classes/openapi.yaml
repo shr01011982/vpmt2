@@ -1,0 +1,173 @@
+openapi: 3.0.1
+info:
+  description: API to manage role-permission mappings
+  title: Role Permission Mapping API
+  version: 1.0.0
+servers:
+- url: http://localhost:8082
+paths:
+  /api/role-permissions:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - id: 1
+                roleName: ADMIN
+                permissions:
+                - CREATE
+                - READ
+                - UPDATE
+              - id: 2
+                roleName: MANAGER
+                permissions:
+                - READ
+                - DELETE
+              schema:
+                items:
+                  $ref: '#/components/schemas/RolePermissionResponse'
+                type: array
+          description: List of mappings
+      summary: List all role-permission mappings
+      x-accepts:
+      - application/json
+    post:
+      requestBody:
+        content:
+          application/json:
+            example:
+              roleName: ADMIN
+              permissions:
+              - CREATE
+              - READ
+              - UPDATE
+            schema:
+              $ref: '#/components/schemas/RolePermissionRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: 1
+                roleName: ADMIN
+                permissions:
+                - CREATE
+                - READ
+                - UPDATE
+              schema:
+                $ref: '#/components/schemas/RolePermissionResponse'
+          description: Mapping created
+      summary: Add new role-permission mapping
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /api/role-permissions/{id}:
+    delete:
+      operationId: deleteRolePermissionById
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          example: 1
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Deleted successfully
+        "404":
+          description: Mapping not found
+      summary: Delete role-permission mapping by ID
+      x-accepts:
+      - application/json
+    get:
+      operationId: getRolePermissionById
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          example: 1
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 1
+                roleName: ADMIN
+                permissions:
+                - CREATE
+                - READ
+                - UPDATE
+              schema:
+                $ref: '#/components/schemas/RolePermissionResponse'
+          description: Mapping found
+        "404":
+          description: Mapping not found
+      summary: Get role-permission mapping by ID
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    RolePermissionRequest:
+      example:
+        permissions:
+        - CREATE
+        - UPDATE
+        roleName: ADMIN
+      properties:
+        roleName:
+          example: ADMIN
+          maxLength: 15
+          type: string
+        permissions:
+          example:
+          - CREATE
+          - UPDATE
+          items:
+            enum:
+            - CREATE
+            - READ
+            - UPDATE
+            - DELETE
+            type: string
+          type: array
+      required:
+      - permissions
+      - roleName
+      type: object
+    RolePermissionResponse:
+      example:
+        permissions:
+        - CREATE
+        - READ
+        - UPDATE
+        roleName: ADMIN
+        id: 1
+      properties:
+        id:
+          example: 1
+          type: integer
+        roleName:
+          example: ADMIN
+          type: string
+        permissions:
+          example:
+          - CREATE
+          - READ
+          - UPDATE
+          items:
+            enum:
+            - CREATE
+            - READ
+            - UPDATE
+            - DELETE
+            type: string
+          type: array
+      type: object

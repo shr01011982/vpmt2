@@ -1,0 +1,13 @@
+org\openapitools\service\PermissionService.class
+org\openapitools\model\PermissionRequest.class
+org\openapitools\api\PermissionApiController.class
+org\openapitools\OpenApiGeneratorApplication.class
+org\openapitools\RFC3339DateFormat.class
+org\openapitools\api\ApiApi.class
+org\openapitools\model\PermissionResponse.class
+org\openapitools\entity\Permission.class
+org\openapitools\repository\PermissionRepository.class
+org\openapitools\api\ApiUtil.class
+org\openapitools\configuration\SpringDocConfiguration.class
+org\openapitools\service\impl\PermissionServiceImpl.class
+org\openapitools\configuration\HomeController.class

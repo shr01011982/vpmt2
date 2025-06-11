@@ -1,0 +1,4 @@
+package org.openapitools.repository;
+
+public interface RolePermissionMappingRepository {
+}

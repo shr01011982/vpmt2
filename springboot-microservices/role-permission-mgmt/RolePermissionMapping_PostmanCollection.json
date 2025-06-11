@@ -1,0 +1,97 @@
+{
+  "info": {
+    "name": "Role Permission Mapping API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "b4c30260-8731-4a7c-90ed-123456789abc",
+    "description": "Postman collection for testing Role-Permission Mapping API"
+  },
+  "item": [
+    {
+      "name": "Create Role-Permission Mapping",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"roleName\": \"ADMIN\",\n  \"permissions\": [\n    \"CREATE\",\n    \"READ\",\n    \"UPDATE\",\n    \"DELETE\"\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8082/api/role-permissions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "api",
+            "role-permissions"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All Role-Permission Mappings",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/api/role-permissions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "api",
+            "role-permissions"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Role-Permission Mapping By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/api/role-permissions/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "api",
+            "role-permissions",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Role-Permission Mapping By ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/api/role-permissions/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "api",
+            "role-permissions",
+            "1"
+          ]
+        }
+      }
+    }
+  ]
+}
