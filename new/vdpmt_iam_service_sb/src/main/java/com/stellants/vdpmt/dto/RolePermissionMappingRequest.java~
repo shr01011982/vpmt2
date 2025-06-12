@@ -1,0 +1,16 @@
+package com.stellants.vdpmt.dto;
+
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.List;
+
+public class RolePermissionMappingRequest {
+    @NotNull
+    private Long roleId;
+
+    @NotEmpty
+    private List<Long> permissionIds;
+}
+

@@ -1,0 +1,7 @@
+package com.stellants.vdpmt.repository;
+
+public interface RolePermissionService {
+    Role mapPermissionsToRole(Long roleId, List<Long> permissionIds);
+    Set<Permission> getPermissionsByRoleId(Long roleId);
+}
+

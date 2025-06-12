@@ -1,0 +1,13 @@
+package com.stellants.vdpmt.service;
+
+import com.stellants.vdpmt.dto.PermissionDTO;
+import com.stellants.vdpmt.dto.RoleDTO;
+import com.stellants.vdpmt.entity.Permission;
+import com.stellants.vdpmt.entity.Role;
+
+import java.util.List;
+
+public interface RoleService {
+     Role createRole(RoleDTO dto);
+    List<Role> getAllRoles();
+}

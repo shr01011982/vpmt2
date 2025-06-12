@@ -1,0 +1,41 @@
+package com.stellants.vdpmt.exception;
+
+import org.springframework.stereotype.Controller;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+@Controller
+public class CustomErrorController implements ErrorController {
+
+    private final ErrorAttributes errorAttributes;
+
+    public CustomErrorController(ErrorAttributes errorAttributes) {
+        this.errorAttributes = errorAttributes;
+    }
+
+    @RequestMapping("/error")
+    public ResponseEntity<Map<String, Object>> handleError(HttpServletRequest request) {
+        int statusCode = (Integer) request.getAttribute("jakarta.servlet.error.status_code");
+
+        if (statusCode == 404) {
+            Map<String, Object> body = new HashMap<>();
+            body.put("status", "fail");
+            body.put("statusCode", 404);
+            body.put("message", "The requested endpoint was not found");
+            body.put("timestamp", LocalDateTime.now());
+            return ResponseEntity.status(404).body(body);
+        }
+        String path = (String) request.getAttribute("jakarta.servlet.error.request_uri");
+        System.out.println("Unknown endpoint accessed: " + path);
+
+        return ResponseEntity.status(statusCode).build();
+    }
+}

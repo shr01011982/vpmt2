@@ -1,0 +1,31 @@
+package com.stellants.vdpmt.service.impl;
+
+import com.stellants.vdpmt.dto.PermissionDTO;
+import com.stellants.vdpmt.repository.PermissionRepository;
+import com.stellants.vdpmt.service.PermissionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.stellants.vdpmt.entity.Permission;
+
+import java.util.List;
+
+@Service
+public class PermissionServiceImpl implements PermissionService {
+
+    @Autowired
+    private PermissionRepository permissionRepository;
+
+    @Override
+    public Permission createPermission(PermissionDTO dto) {
+        if (permissionRepository.existsByName(dto.getName())) {
+            throw new RuntimeException("Permission already exists");
+        }
+        //Permission permission = new Permission(null, dto.getName(), dto.getDescription());
+        return permissionRepository.save(permission);
+    }
+
+    @Override
+    public List<Permission> getAllPermissions() {
+        return permissionRepository.findAll();
+    }
+}
