@@ -1,0 +1,31 @@
+package com.stellants.vdpmt.controller;
+
+
+import com.stellants.vdpmt.dto.AuthResponse;
+import com.stellants.vdpmt.dto.LoginRequest;
+import com.stellants.vdpmt.dto.RegisterRequest;
+import com.stellants.vdpmt.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@Tag(name = "Authentication API")
+@RestController
+@RequestMapping("/api/v1/auth")
+public class AuthController {
+
+    @Autowired private UserService userService;
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(userService.register(request));
+    }
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(userService.login(request));
+    }
+
+}
+

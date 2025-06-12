@@ -1,0 +1,4 @@
+package com.stellants.vdpmt.dto;
+
+public class AuthResponse {
+}
