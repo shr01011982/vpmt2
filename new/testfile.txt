@@ -1,0 +1,41 @@
+openapi-generator-cli generate -i admin-api.yaml -g spring -o spring-server --additional-properties=useSpringBoot3=true,java17=true,interfaceOnly=false,buildTool=maven
+
+cd spring-server
+./mvnw spring-boot:run
+
+
+http://localhost:8080/swagger-ui.html
+
+
+openapi-generator-cli generate -i admin-api.yaml -g java -o java-client --additional-properties=library=resttemplate
+
+
+openapi-generator-cli generate -i admin-api.yml -g spring -o Admini-server --additional-properties=useSpringBoot3=true,java21=true,interfaceOnly=false,buildTool=maven,basePackage=com.stellants.vpmt,apiPackage=com.stellants.vpmt.controller,modelPackage=com.stellants.vpmt.model,configPackage=com.stellants.vpmt.security,invokerPackage=com.stellants.vpmt.service,artifactId=admin-functionality-service,artifactVersion=1.0.0,applicationName=AdminFunctionalityApplication
+
+
+Let me know if you'd like JWT token authentication added to this WebClient call (in case the permission API is secured)
+
+springboot-microservices/
+├── permission-mgmt-service/
+│   └── openapi.yaml
+├── role-permission-mgmt/
+│   └── openapi.yaml
+└── user-auth-service/
+    └── openapi.yaml
+	
+Run Stub Generation Command
+openapi-generator-cli generate -i permission-management.yml -g spring -o permission-mgmt-service --additional-properties=springBootVersion=3.4.6,java21=true,useSpringBoot3=true,buildTool=maven
+
+openapi-generator-cli generate -i rolepermissionmapping-api.yml -g spring -o role-permission-mgmt --additional-properties=springBootVersion=3.4.6,java21=true,useSpringBoot3=true,buildTool=maven
+
+openapi-generator-cli generate -i user-auth-service-api.yml -g spring -o user-auth-service --additional-properties=springBootVersion=3.4.6,java21=true,useSpringBoot3=true,buildTool=maven
+
+in RoleRequest dto  role to update @notBlank
+LoginRequest (@NotBlank for username and password)
+
+RolePermissionMappingRequest (@NotBlank for roleName and permissionName)
+
+{
+  "roleId": 1,
+  "permissionIds": [100, 101, 102]
+}
