@@ -1,0 +1,10 @@
+package com.stellants.usrmgmt.repository;
+
+package com.example.rolepermission.repository;
+
+import com.example.rolepermission.entity.RolePermission;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RolePermissionRepository extends JpaRepository<RolePermission, Long> {
+}
+

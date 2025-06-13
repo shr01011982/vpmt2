@@ -1,0 +1,4 @@
+package com.stellants.usrmgmt.entity;
+
+public class RolePermission {
+}

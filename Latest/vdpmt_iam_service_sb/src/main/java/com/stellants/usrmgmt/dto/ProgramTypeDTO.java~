@@ -1,0 +1,21 @@
+package com.stellants.usrmgmt.dto;
+
+
+
+public class ProgramTypeDTO {
+
+    private Long id;
+    private String name;
+    private String overview;
+
+    public ProgramTypeDTO() {}
+
+    public ProgramTypeDTO(Long id, String name, String overview) {
+        this.id = id;
+        this.name = name;
+        this.overview = overview;
+    }
+
+    // Getters and setters
+}
+

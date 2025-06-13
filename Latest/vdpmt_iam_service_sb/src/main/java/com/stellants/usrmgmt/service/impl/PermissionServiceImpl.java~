@@ -1,0 +1,70 @@
+package com.stellants.usrmgmt.service.impl;
+
+import com.stellants.usrmgmt.dto.PermissionDTO;
+import com.stellants.usrmgmt.dto.RolePermissionMappingDTO;
+import com.stellants.usrmgmt.entity.Permission;
+import com.stellants.usrmgmt.entity.Role;
+import com.stellants.usrmgmt.repository.PermissionRepository;
+import com.stellants.usrmgmt.repository.RoleRepository;
+import com.stellants.usrmgmt.service.PermissionService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public class PermissionServiceImpl implements PermissionService {
+
+        @Autowired
+        private PermissionRepository permissionRepo;
+
+        @Autowired
+        private RoleRepository roleRepo;
+
+        @Override
+        public PermissionDTO createPermission(PermissionDTO dto) {
+            Permission permission = new Permission();
+            permission.setName(dto.getName());
+            permission.setDescription(dto.getDescription());
+            permission = permissionRepo.save(permission);
+            dto.setId(permission.getId());
+            return dto;
+        }
+
+        @Override
+        public PermissionDTO updatePermission(Long id, PermissionDTO dto) {
+            Permission permission = permissionRepo.findById(id).orElseThrow();
+            permission.setName(dto.getName());
+            permission.setDescription(dto.getDescription());
+            permission = permissionRepo.save(permission);
+            dto.setId(permission.getId());
+            return dto;
+        }
+
+        @Override
+        public void deletePermission(Long id) {
+            permissionRepo.deleteById(id);
+        }
+
+        @Override
+        public List<PermissionDTO> getAllPermissions() {
+            return permissionRepo.findAll().stream().map(p -> {
+                PermissionDTO dto = new PermissionDTO();
+                dto.setId(p.getId());
+                dto.setName(p.getName());
+                dto.setDescription(p.getDescription());
+                return dto;
+            }).collect(Collectors.toList());
+        }
+
+
+
+    @Override
+    public void mapPermissionsToRole(RolePermissionMappingDTO dto) {
+            Role role = roleRepo.findByName(dto.getRoleName()).orElseThrow();
+            Set<Permission> permissions = new HashSet<>(permissionRepo.findAllById(dto.getPermissionIds()));
+            role.setPermissions(permissions);
+            roleRepo.save(role);
+      }
+}

@@ -1,0 +1,63 @@
+package com.stellants.usrmgmt.controller;
+
+
+import com.stellants.usrmgmt.dto.PermissionDTO;
+import com.stellants.usrmgmt.dto.RolePermissionMappingDTO;
+import com.stellants.usrmgmt.response.ApiResponse;
+import com.stellants.usrmgmt.service.PermissionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/permissions")
+@Tag(name = "Permission Management")
+public class PermissionController {
+
+    @Autowired
+    private PermissionService permissionService;
+
+    @PostMapping
+    @Operation(summary = "Create a permission")
+    public ResponseEntity<ApiResponse<PermissionDTO>> create(@valid @RequestBody PermissionDTO dto) {
+        PermissionDTO result = permissionService.createPermission(dto);
+        ApiResponse<PermissionDTO> response = new ApiResponse<>("success", 200, "Permission added suceessfully", result);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update a permission")
+    public ResponseEntity<ApiResponse<PermissionDTO>> update(@PathVariable Long id, @RequestBody PermissionDTO dto) {
+        PermissionDTO result = permissionService.updatePermission(id, dto);
+        ApiResponse<PermissionDTO> response = new ApiResponse<>("success", 200, "Permission updated suceessfully", result);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a permission")
+    public ResponseEntity<ApiResponse<List<Object>>> delete(@PathVariable Long id) {
+        permissionService.deletePermission(id);
+        ApiResponse<List<Object>> response = new ApiResponse<>("success", 200, "Permission deleted suceessfully", List.of());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    @Operation(summary = "List all permissions")
+    public ResponseEntity<ApiResponse<List<PermissionDTO>>> getAll() {
+        List<PermissionDTO> permissions = permissionService.getAllPermissions();
+        ApiResponse<List<PermissionDTO>> response = new ApiResponse<>("success", 200, "Permissions Listing", permissions);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/map-to-role")
+    @Operation(summary = "Map permissions to a role")
+    public ResponseEntity<ApiResponse<List<Object>>> mapToRole(@RequestBody RolePermissionMappingDTO dto) {
+        permissionService.mapPermissionsToRole(dto);
+        ApiResponse<List<Object>> response = new ApiResponse<>("success", 200, "Permissions mapped to role", List.of());
+        return ResponseEntity.ok(response);
+    }
+}

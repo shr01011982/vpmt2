@@ -1,0 +1,4 @@
+package com.stellants.usrmgmt.service.impl;
+
+public class ActivityServiceImpl {
+}

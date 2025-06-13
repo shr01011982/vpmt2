@@ -1,0 +1,65 @@
+package com.stellants.usrmgmt.response;
+
+
+public class ApiResponse<T> {
+    private String status;
+    private int statusCode;
+    private String message;
+    private T result;
+    private String jsontoken;
+
+    public ApiResponse() {}
+
+    public ApiResponse(String status, int statusCode, String message, T result) {
+        this.status = status;
+        this.statusCode = statusCode;
+        this.message = message;
+        this.result = result;
+    }
+    public ApiResponse(String status, int statusCode, String message, T result, String jsontoken) {
+        this(status, statusCode, message, result);
+        this.jsontoken = jsontoken;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getResult() {
+        return result;
+    }
+
+    public void setResult(T result) {
+        this.result = result;
+    }
+
+    public String getJsontoken() {
+        return jsontoken;
+    }
+
+    public void setJsontoken(String jsontoken) {
+        this.jsontoken = jsontoken;
+    }
+    // Getters and setters ...
+}
+

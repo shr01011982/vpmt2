@@ -1,0 +1,14 @@
+package com.stellants.usrmgmt.service;
+
+package com.example.programtype.service;
+
+
+
+import java.util.List;
+
+public interface ProgramTypeService {
+    ProgramTypeDTO create(ProgramTypeDTO dto);
+    ProgramTypeDTO update(Long id, ProgramTypeDTO dto);
+    void delete(Long id);
+    List<ProgramTypeDTO> getAll();
+}

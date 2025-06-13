@@ -1,0 +1,4 @@
+package com.stellants.usrmgmt.repository;
+
+public class RegionRepository {
+}

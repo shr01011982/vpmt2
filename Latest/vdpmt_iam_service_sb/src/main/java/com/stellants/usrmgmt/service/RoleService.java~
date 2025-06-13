@@ -1,0 +1,10 @@
+package com.stellants.usrmgmt.service;
+
+public interface RoleService {
+    RoleDTO createRole(RoleDTO dto);
+    RoleDTO updateRole(Long id, RoleDTO dto);
+    void deleteRole(Long id);
+    List<RoleDTO> getAllRoles();
+    void mapPermissionsToRole(RolePermissionMappingDTO dto);
+
+}

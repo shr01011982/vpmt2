@@ -1,0 +1,11 @@
+package com.stellants.usrmgmt.service;
+
+import com.stellants.usrmgmt.dto.PermissionDTO;
+
+public interface PermissionService {
+    PermissionDTO createPermission(PermissionDTO dto);
+    PermissionDTO updatePermission(Long id, PermissionDTO dto);
+    void deletePermission(Long id);
+    List<PermissionDTO> getAllPermissions();
+    void mapPermissionsToRole(RolePermissionMappingDTO dto);
+}

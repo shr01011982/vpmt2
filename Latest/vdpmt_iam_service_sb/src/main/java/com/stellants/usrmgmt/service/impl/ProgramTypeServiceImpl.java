@@ -1,0 +1,51 @@
+package com.stellants.usrmgmt.service.impl;
+
+
+
+import com.stellants.usrmgmt.dto.ProgramTypeDTO;
+import com.stellants.usrmgmt.entity.ProgramType;
+import com.stellants.usrmgmt.repository.ProgramTypeRepository;
+import com.stellants.usrmgmt.service.ProgramTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class ProgramTypeServiceImpl implements ProgramTypeService {
+
+    @Autowired
+    private ProgramTypeRepository repository;
+
+    @Override
+    public ProgramTypeDTO create(ProgramTypeDTO dto) {
+        ProgramType program = new ProgramType();
+        program.setName(dto.getName());
+        program.setOverview(dto.getOverview());
+        program = repository.save(program);
+        return new ProgramTypeDTO(program.getId(), program.getName(), program.getOverview());
+    }
+
+    @Override
+    public ProgramTypeDTO update(Long id, ProgramTypeDTO dto) {
+        ProgramType program = repository.findById(id).orElseThrow();
+        program.setName(dto.getName());
+        program.setOverview(dto.getOverview());
+        program = repository.save(program);
+        return new ProgramTypeDTO(program.getId(), program.getName(), program.getOverview());
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    @Override
+    public List<ProgramTypeDTO> getAll() {
+        return repository.findAll().stream()
+                .map(p -> new ProgramTypeDTO(p.getId(), p.getName(), p.getOverview()))
+                .collect(Collectors.toList());
+    }
+}
+

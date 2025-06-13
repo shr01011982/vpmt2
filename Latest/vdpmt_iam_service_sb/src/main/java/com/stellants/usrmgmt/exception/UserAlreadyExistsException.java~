@@ -1,0 +1,4 @@
+package com.stellants.usrmgmt.exception;
+
+public class UserAlreadyExistsException {
+}
